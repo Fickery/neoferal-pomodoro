@@ -1,0 +1,203 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin grey {
+  background: #e6e6e6;
+}
+
+@mixin blue {
+  background: #e9d3f9;
+}
+
+#root {
+  font-family: "Poppins", sans-serif;
+  margin: 0 auto;
+  text-align: center;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style: none;
+}
+
+.font-black {
+  font-size: 1em;
+  font-weight: 900;
+}
+
+.font-black-big {
+  font-size: 6em;
+  font-weight: 900;
+}
+
+button {
+  background-color: #fcd7e4;
+  display: inline-block;
+  padding: 0.7em 3em;
+  margin: 0 0.3em 0.3em 0;
+  border-radius: 2em;
+  font-family: "poppins", sans-serif;
+  font-weight: 800;
+  font-size: 0.85em;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  transition: all 0.1s ease-in;
+}
+
+button:hover {
+  background-color: #f3c3d3;
+}
+
+@media all and (max-width: 30em) {
+  button {
+    display: block;
+    margin: 0.2em auto;
+  }
+}
+/* pomodoro app */
+
+.pomo-cont {
+  height: 100vh;
+  @include flex-center;
+}
+
+/* pomodoro app */
+
+/*------------ DIVIDER ------------*/
+
+/* LEFT pomodoro app */
+.left-title-top {
+  @include flex-center;
+  @include grey;
+  flex-direction: column;
+}
+
+.left-title {
+  @include flex-center;
+  width: 100%;
+  flex-direction: column;
+  border: 1px solid black;
+  height: 10vh;
+}
+
+.task-content {
+  @include grey;
+  height: 50vh;
+  width: 10vw;
+  border: 1px solid black;
+  border-top: none;
+}
+
+.task-content-box {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.task-box-create {
+  @include flex-center;
+  padding: 1rem;
+  background-color: #fdf7dc;
+  font-weight: 500;
+  border-bottom: 1px solid black;
+  cursor: pointer;
+}
+
+.task-box {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+  background-color: #f0feef;
+  font-weight: 500;
+  border-bottom: 1px solid black;
+  transition: all 0.05s ease-in;
+  cursor: pointer;
+}
+
+.task-name {
+  width: 100%;
+  font-size: 0.8rem;
+}
+
+.del-btn {
+  font-weight: 700;
+  padding: 1rem;
+  background-color: #d12d51;
+  color: white;
+  border-left: 1px solid black;
+  transition: all 0.05s ease-in;
+  cursor: pointer;
+}
+
+.del-btn:hover {
+  background: #cc7532;
+}
+
+/* LEFT pomodoro app */
+
+/*------------ DIVIDER ------------*/
+
+/* RIGHT pomodoro app */
+.right-title-top {
+  @include grey;
+  height: 10vh;
+  width: 30vw;
+  border: 1px solid #000;
+  border-left: none;
+}
+
+.right-title-top > ul {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  height: 90%;
+}
+
+.loading-bar {
+  background-color: white;
+  height: 10px;
+  width: 100%;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+.the-loading-bar {
+  @include blue;
+  height: 100%;
+  width: 40%;
+}
+
+.main-content {
+  @include flex-center;
+  flex-direction: column;
+  height: 50vh;
+  border: 1px solid black;
+  border-left: none;
+  border-top: none;
+}
+
+.button-top {
+  @include flex-center;
+  gap: 10%;
+  margin: 1em 0;
+}
+
+.reset-btn {
+  border: 1px solid black;
+  background: none;
+}
+
+/* RIGHT pomodoro app */
