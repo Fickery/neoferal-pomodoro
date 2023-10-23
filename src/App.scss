@@ -7,7 +7,7 @@
 }
 
 @mixin grey {
-  background: #e6e6e6;
+  background: #fae5ec;
 }
 
 @mixin blue {
@@ -21,6 +21,7 @@
 }
 
 * {
+  font-family: "Poppins", sans-serif;
   box-sizing: border-box;
   margin: 0;
   padding: 0;
@@ -40,7 +41,7 @@ ul {
   font-weight: 900;
 }
 
-button {
+.pomodoro-btn {
   background-color: #fcd7e4;
   display: inline-block;
   padding: 0.7em 3em;
@@ -55,7 +56,7 @@ button {
   transition: all 0.1s ease-in;
 }
 
-button:hover {
+.pomodoro-btn:hover {
   background-color: #f3c3d3;
 }
 
@@ -85,8 +86,9 @@ button:hover {
 
 .left-title {
   @include flex-center;
+  flex-direction: row;
   width: 100%;
-  flex-direction: column;
+  gap: 1em;
   border: 1px solid black;
   height: 10vh;
 }
@@ -115,6 +117,19 @@ button:hover {
   cursor: pointer;
 }
 
+.create-btn {
+  font-size: 1em;
+  font-weight: 500;
+  cursor: pointer;
+  padding: 0.1rem 0.5rem;
+  border-radius: 0.25em;
+  border: 1px solid black;
+}
+
+.create-btn:hover {
+  background: #e0f7e0;
+}
+
 .task-box {
   display: flex;
   justify-content: space-between;
@@ -130,6 +145,10 @@ button:hover {
 .task-name {
   width: 100%;
   font-size: 0.8rem;
+}
+
+.task-box:hover {
+  background: #e0f7e0;
 }
 
 .del-btn {
@@ -175,7 +194,7 @@ button:hover {
 }
 
 .the-loading-bar {
-  @include blue;
+  background-color: #5b1f6c;
   height: 100%;
   width: 40%;
 }
@@ -187,6 +206,13 @@ button:hover {
   border: 1px solid black;
   border-left: none;
   border-top: none;
+}
+
+.break {
+  font-size: 0.8em;
+  border: 1px solid black;
+  border-radius: 30px;
+  padding: 0.2rem 1.5rem;
 }
 
 .button-top {
@@ -201,3 +227,6 @@ button:hover {
 }
 
 /* RIGHT pomodoro app */
+.split {
+  display: flex;
+}
