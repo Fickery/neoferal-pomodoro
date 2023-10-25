@@ -81,6 +81,7 @@ ul {
 .left-title-top {
   @include flex-center;
   @include grey;
+  // height: 10vh;
   flex-direction: column;
 }
 
@@ -208,11 +209,17 @@ ul {
   border-top: none;
 }
 
-.break {
-  font-size: 0.8em;
-  border: 1px solid black;
-  border-radius: 30px;
-  padding: 0.2rem 1.5rem;
+.task-title {
+  background: #f0feef;
+  font-size: 0.7em;
+  font-weight: 500;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+// .selected-task,
+.active-task {
+  background: #d9dcac;
 }
 
 .button-top {
@@ -227,6 +234,41 @@ ul {
 }
 
 /* RIGHT pomodoro app */
-.split {
-  display: flex;
+
+/*------------ DIVIDER ------------*/
+
+/* Misc */
+
+.task-title-input {
+  background: #f0feef;
+  width: 100%;
+  text-align: center;
+  outline: 0;
+  border-width: 1px 0 1px;
+  padding: 0.25rem;
+  cursor: pointer;
 }
+
+.task-title-input:hover {
+  background: #e0f7e0;
+}
+
+.task-title-input:focus {
+  @include grey();
+  outline: none;
+}
+
+.no-active-task {
+  @include flex-center();
+  @include grey();
+  height: 60vh;
+  width: 30vw;
+  padding: 1rem;
+  text-align: center;
+}
+
+.active {
+  background-color: red;
+}
+
+/* Misc */

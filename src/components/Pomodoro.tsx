@@ -1,4 +1,25 @@
-export default function Pomodoro() {
+interface PomodoroProps {
+  onUpdateTask: string;
+  activeTask: string;
+  activeTaskId: string;
+}
+
+export default function Pomodoro({
+  activeTaskId,
+  onUpdateTask,
+  activeTask,
+}: PomodoroProps) {
+  const onEditField = (key, value) => {
+    onUpdateTask({
+      ...activeTask,
+      [key]: value,
+      lastModified: Date.now(),
+    });
+  };
+
+  if (!activeTask) {
+    return <div className="no-active-task">No Task selected</div>;
+  }
   return (
     <div className="right-cont">
       <div className="right-title-top">
@@ -14,6 +35,15 @@ export default function Pomodoro() {
         </ul>
         <div className="loading-bar">
           <div className="the-loading-bar"></div>
+          <input
+            className="task-title-input"
+            type="text"
+            id="title"
+            placeholder="New Task"
+            value={activeTask.title}
+            onChange={(e) => onEditField("title", e.target.value)}
+            autoFocus
+          />
         </div>
       </div>
       <div className="main-content">
