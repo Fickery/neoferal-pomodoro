@@ -1,13 +1,13 @@
-import { useState } from "react";
-
 interface SidebarProps {
   tasks: {
     id: number;
-    name: string;
+    title: string;
+    score: number;
   }[];
   setTasks: (tasks: { id: number; name: string }[]) => void;
   activeTask: {
     id: number;
+    title: string;
   };
   setActiveTask: (id: number) => void;
   setActiveTaskId: (id: number) => void;
@@ -24,44 +24,24 @@ interface SidebarProps {
   LastModified: number;
 }
 
-// const Sidebar = ({
-//   tasks,
-//   setTasks,
-//   activeTask,
-//   setActiveTask,
-//   newTask,
-//   deleteTask,
-//   setActiveTask,
-// }) => {
-
 export default function Sidebar(props: SidebarProps) {
-  console.log(props.tasks);
-  const sortedTask = props.tasks.sort(
-    (a, b) => b.lastModified - a.lastModified,
-  );
-  const [input, setInput] = useState("");
-  const getInput = (text) => {
-    setInput(text);
-    props.setFilteredNotes((prev) => {
-      if (!text) {
-        return props.tasks;
-      }
-      return props.tasks.filter((task) =>
-        task.title.toLowerCase().includes(text.toLowerCase()),
-      );
-    });
-  };
-
-  const currentActiveTask = input ? props.filteredNotes : props.tasks;
-
-  const tasksElement = props.tasks.map((task, index) => (
+  // console.log(props.tasks);
+  const tasksElement = props.tasks.map((task) => (
     <li
       key={task.id}
-      className={`app-sidebar-note ${task.id === props.activeTask && "active"}`}
+      className={`app-sidebar-note ${
+        task.id === props.activeTask.id && "active"
+      }`}
       onClick={() => props.setActiveTask(task.id)}
     >
       <div className="task-box">
-        <p className="task-name">{task.title}</p>
+        <p className="task-name">
+          {task.title !== "" ? (
+            <p className="task-name">{task.title}</p>
+          ) : (
+            <p className="task-name">New Task</p>
+          )}
+        </p>
         <p
           className="del-btn"
           onClick={(event) => props.deleteTask(event, task.id)}

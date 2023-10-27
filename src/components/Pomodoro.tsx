@@ -1,20 +1,50 @@
+import { useState } from "react";
+import Timer from "./Timer";
+
 interface PomodoroProps {
-  onUpdateTask: string;
+  onUpdateTask: (task: string) => void;
   activeTask: string;
   activeTaskId: string;
+  score: number;
 }
 
 export default function Pomodoro({
   activeTaskId,
   onUpdateTask,
   activeTask,
+  score,
 }: PomodoroProps) {
-  const onEditField = (key, value) => {
+  const [startTimer, setStartTimer] = useState(false);
+  const time = new Date();
+  time.setSeconds(time.getSeconds() + 1500);
+
+  const onEditField = (key: string, value: string) => {
     onUpdateTask({
       ...activeTask,
       [key]: value,
-      lastModified: Date.now(),
     });
+  };
+
+  const handleAdd = () => {
+    onUpdateTask({
+      ...activeTask,
+      score: score + 1,
+    });
+  };
+
+  const handleMinus = () => {
+    onUpdateTask({
+      ...activeTask,
+      score: score - 1,
+    });
+  };
+
+  const handleStartClick = () => {
+    setStartTimer(true);
+  };
+
+  const handleTimerStart = () => {
+    setStartTimer(true);
   };
 
   if (!activeTask) {
@@ -23,16 +53,24 @@ export default function Pomodoro({
   return (
     <div className="right-cont">
       <div className="right-title-top">
-        <ul>
-          <li>
-            <p className="font-black">Rounds</p>
-            <p>1/4</p>
-          </li>
-          <li>
-            <p className="font-black">Pomodoros</p>
-            <p>1/12</p>
-          </li>
-        </ul>
+        <div className="right-pomodoros-score">
+          <p className="font-black">Pomodoros</p>
+          <div className="score-btn">
+            <button className="right-score-btn" id="add" onClick={handleAdd}>
+              +
+            </button>
+            <button className="right-score-btn" id="score">
+              1/{score}
+            </button>
+            <button
+              className="right-score-btn"
+              id="minus"
+              onClick={handleMinus}
+            >
+              -
+            </button>
+          </div>
+        </div>
         <div className="loading-bar">
           <div className="the-loading-bar"></div>
           <input
@@ -47,15 +85,15 @@ export default function Pomodoro({
         </div>
       </div>
       <div className="main-content">
-        {/* <p className="break">On Break - 5:00 minutes</p> */}
-        <p className="font-black-big">25:00</p>
-        <div className="button-top">
-          <button className="pomodoro-btn">Start</button>
-          <button className="pomodoro-btn" disabled>
-            Pause
-          </button>
-        </div>
-        <button className="pomodoro-btn reset-btn">Reset</button>
+        <p className="break">On Break - 5:00 minutes</p>
+        {activeTask && (
+          <Timer
+            key={activeTask.id} // Add a unique key for each timer
+            expiryTimestamp={activeTask.expiryTimestamp}
+            onUpdateTask={onUpdateTask}
+            activeTaskId={activeTaskId}
+          />
+        )}
       </div>
     </div>
   );
