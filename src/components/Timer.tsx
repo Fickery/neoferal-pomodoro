@@ -6,22 +6,40 @@ interface TimerProps {
 }
 
 export default function Timer({ expiryTimestamp }: TimerProps) {
-  const [resetClicked, setResetClicked] = useState(false);
+  const [isBreakActive, setIsBreakActive] = useState(false);
   const [timerStarted, setTimerStarted] = useState(false);
 
   const { seconds, minutes, isRunning, start, pause, resume, restart } =
     useTimer({
       expiryTimestamp,
-      onExpire: () => console.warn("onExpire called"),
+      onExpire: () => {
+        setIsBreakActive(true);
+        startBreakTimer();
+        console.warn("onExpire called");
+      },
       autoStart: false,
     });
 
+  const {
+    seconds: breakSeconds,
+    minutes: breakMinutes,
+    start: startBreakTimer,
+    reset: resetBreakTimer,
+  } = useTimer({
+    expiryTimestamp: new Date().getTime() + 1000 * 60 * 5, // Set the break timer duration to 10 minutes
+    autoStart: false, // Do not start the break timer immediately
+    onExpire: () => {
+      setIsBreakActive(false);
+      resetBreakTimer();
+      resetMainTimer(); // Reset the main timer after the break
+    },
+  });
+
   useEffect(() => {
-    if (resetClicked) {
-      pause();
-      setResetClicked(false);
+    if (isBreakActive) {
+      startBreakTimer();
     }
-  }, [resetClicked, pause]);
+  }, [isBreakActive, startBreakTimer]);
 
   const handleStart = () => {
     setTimerStarted(true);
@@ -36,15 +54,23 @@ export default function Timer({ expiryTimestamp }: TimerProps) {
     resume();
   };
 
-  const handleResetClick = () => {
-    setResetClicked(true);
-    const time = new Date();
-    time.setSeconds(time.getSeconds() + 1500);
-    restart(time);
+  const resetMainTimer = () => {
+    restart(new Date().getTime() + 1000 * 60 * 25);
+  };
+
+  const handleReset = () => {
+    resetMainTimer();
+    setIsBreakActive(false);
+    startBreakTimer();
   };
 
   return (
     <div style={{ textAlign: "center" }}>
+      {isBreakActive && (
+        <p className="break">
+          On Break <strong>{`${breakMinutes}:${breakSeconds}`}</strong> minutes
+        </p>
+      )}
       <div className="font-black-big">
         <span>{minutes}</span>:<span>{seconds}</span>
       </div>
@@ -62,7 +88,7 @@ export default function Timer({ expiryTimestamp }: TimerProps) {
       <button className="pomodoro-btn" onClick={handleResume}>
         Resume
       </button>
-      <button className="pomodoro-btn" onClick={handleResetClick}>
+      <button className="pomodoro-btn" onClick={handleReset}>
         Reset
       </button>
     </div>

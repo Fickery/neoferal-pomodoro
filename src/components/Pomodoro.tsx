@@ -1,5 +1,6 @@
 import { useState } from "react";
 import Timer from "./Timer";
+import BreakTimer from "./BreakTimer";
 
 interface PomodoroProps {
   onUpdateTask: (task: string) => void;
@@ -16,7 +17,7 @@ export default function Pomodoro({
 }: PomodoroProps) {
   const [startTimer, setStartTimer] = useState(false);
   const time = new Date();
-  time.setSeconds(time.getSeconds() + 1500);
+  time.setSeconds(time.getSeconds() + 1000 * 60 * 25);
 
   const onEditField = (key: string, value: string) => {
     onUpdateTask({
@@ -25,19 +26,19 @@ export default function Pomodoro({
     });
   };
 
-  const handleAdd = () => {
-    onUpdateTask({
-      ...activeTask,
-      score: score + 1,
-    });
-  };
+  // const handleAdd = () => {
+  //   onUpdateTask({
+  //     ...activeTask,
+  //     score: score + 1,
+  //   });
+  // };
 
-  const handleMinus = () => {
-    onUpdateTask({
-      ...activeTask,
-      score: score - 1,
-    });
-  };
+  // const handleMinus = () => {
+  //   onUpdateTask({
+  //     ...activeTask,
+  //     score: score - 1,
+  //   });
+  // };
 
   const handleStartClick = () => {
     setStartTimer(true);
@@ -55,7 +56,7 @@ export default function Pomodoro({
       <div className="right-title-top">
         <div className="right-pomodoros-score">
           <p className="font-black">Pomodoros</p>
-          <div className="score-btn">
+          {/* <div className="score-btn">
             <button className="right-score-btn" id="add" onClick={handleAdd}>
               +
             </button>
@@ -69,26 +70,24 @@ export default function Pomodoro({
             >
               -
             </button>
-          </div>
+          </div> */}
         </div>
-        <div className="loading-bar">
-          <div className="the-loading-bar"></div>
-          <input
-            className="task-title-input"
-            type="text"
-            id="title"
-            placeholder="New Task"
-            value={activeTask.title}
-            onChange={(e) => onEditField("title", e.target.value)}
-            autoFocus
-          />
-        </div>
+        {/* <div className="loading-bar">
+          <div className="the-loading-bar"></div> */}
+        <input
+          className="task-title-input"
+          type="text"
+          id="title"
+          placeholder="New Task"
+          value={activeTask.title}
+          onChange={(e) => onEditField("title", e.target.value)}
+          autoFocus
+        />
       </div>
       <div className="main-content">
-        <p className="break">On Break - 5:00 minutes</p>
         {activeTask && (
           <Timer
-            key={activeTask.id} // Add a unique key for each timer
+            key={activeTask.id}
             expiryTimestamp={activeTask.expiryTimestamp}
             onUpdateTask={onUpdateTask}
             activeTaskId={activeTaskId}
